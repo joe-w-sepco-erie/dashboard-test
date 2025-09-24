@@ -6,7 +6,7 @@
   },
   "name": "alert-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Receives Grafana webhook alerts and stores them in a database.",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
