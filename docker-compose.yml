@@ -40,7 +40,20 @@ services:
       - "3306:3306"
     restart: unless-stopped
 
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    # networks:
+    #   - localprom
+    ports:
+      - 9090:9090
+
 volumes:
       grafana-data: {}
       grafana-config: {}
       mysql-storage: {}
+
+# networks:
+#   localprom:
+#     driver: bridge
