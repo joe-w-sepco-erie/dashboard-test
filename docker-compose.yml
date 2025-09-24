@@ -12,6 +12,20 @@ services:
       - grafana-config:/etc/grafana
     restart: unless-stopped
 
+  alert-api:
+    build: ./alert-api
+    container_name: alert-api
+    ports:
+      - "3003:3003"
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=grafana
+      - DB_PASSWORD=grafana
+      - DB_NAME=grafana
+    depends_on:
+      - mysql
+    restart: unless-stopped
+
   mysql:
     image: mysql:5.7
     container_name: mysql
