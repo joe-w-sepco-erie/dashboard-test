@@ -7,9 +7,11 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
+      - TZ=America/New_York
     volumes:
       - grafana-data:/var/lib/grafana
       - grafana-config:/etc/grafana
+      - ./grafana/custom.ini:/etc/grafana/grafana.ini
     restart: unless-stopped
 
   alert-api:
@@ -22,6 +24,7 @@ services:
       - DB_USER=grafana
       - DB_PASSWORD=grafana
       - DB_NAME=grafana
+      - TZ=America/New_York
     depends_on:
       - mysql
     restart: unless-stopped
@@ -34,20 +37,23 @@ services:
       - MYSQL_DATABASE=grafana
       - MYSQL_USER=grafana
       - MYSQL_PASSWORD=grafana
+      - TZ=America/New_York
     volumes:
       - mysql-storage:/var/lib/mysql
     ports:
       - "3306:3306"
     restart: unless-stopped
 
-  prometheus:
-    image: prom/prometheus
-    volumes:
-      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
-    # networks:
-    #   - localprom
-    ports:
-      - 9090:9090
+  # prometheus:
+  #   image: prom/prometheus
+  #   volumes:
+  #     - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+  #   # networks:
+  #   #   - localprom
+  #   environment:
+  #     - TZ=America/New_York
+  #   ports:
+  #     - 9090:9090
 
 volumes:
       grafana-data: {}
