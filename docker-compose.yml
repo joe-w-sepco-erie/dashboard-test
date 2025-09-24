@@ -2,14 +2,14 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
-    user: "472:472"
     ports:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
-      - ./grafana/data:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
+      - grafana-config:/etc/grafana
     restart: unless-stopped
 
   mysql:
@@ -21,7 +21,12 @@ services:
       - MYSQL_USER=grafana
       - MYSQL_PASSWORD=grafana
     volumes:
-      - ./mysql-storage:/var/lib/mysql
+      - mysql-storage:/var/lib/mysql
     ports:
       - "3306:3306"
     restart: unless-stopped
+
+volumes:
+      grafana-data: {}
+      grafana-config: {}
+      mysql-storage: {}
