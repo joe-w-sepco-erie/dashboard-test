@@ -44,22 +44,18 @@ services:
       - "3306:3306"
     restart: unless-stopped
 
-  # prometheus:
-  #   image: prom/prometheus
-  #   volumes:
-  #     - "./prometheus.yml:/etc/prometheus/prometheus.yml"
-  #   # networks:
-  #   #   - localprom
-  #   environment:
-  #     - TZ=America/New_York
-  #   ports:
-  #     - 9090:9090
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    volumes:
+      - prometheus-config:/etc/prometheus
+    environment:
+      - TZ=America/New_York
+    ports:
+      - 9090:9090
 
 volumes:
       grafana-data: {}
       grafana-config: {}
       mysql-storage: {}
-
-# networks:
-#   localprom:
-#     driver: bridge
+      prometheus-config: {}
